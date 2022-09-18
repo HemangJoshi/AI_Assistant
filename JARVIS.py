@@ -19,7 +19,7 @@ import instaloader
 import pyautogui
 import PyPDF2
 from PIL import ImageGrab
-import pyaudio
+# import pyaudio
 import wave
 import numpy as np 
 from bs4 import BeautifulSoup
@@ -168,11 +168,11 @@ def Intro():
             running = False
             sys.exit()
 
-def talk(self,text):
+def talk(text):
     engine.say(text)
     engine.runAndWait()
 
-def wish(self):
+def wish():
     hour = int(datetime.datetime.now().hour)
     t = time.strftime("%I:%M %p")
     day = Cal_day()
@@ -184,7 +184,7 @@ def wish(self):
     else:
         talk(f"good evening boss, its {day} and the time is {t}")
 
-def temperature(self):
+def temperature():
     IP_Address = get('https://api.ipify.org').text
     url = 'https://get.geojs.io/v1/ip/geo/'+IP_Address+'.json'
     geo_reqeust = get(url)
@@ -197,7 +197,7 @@ def temperature(self):
     temp = data.find("div",class_="BNeawe").text
     talk(f"current {search} is {temp}")
 
-def webCam(self):
+def webCam():
     talk('Opening camera')
     cap = cv2.VideoCapture(0)
     while True:
@@ -211,7 +211,7 @@ def webCam(self):
 
 
 
-def InternetSpeed(self):
+def InternetSpeed():
     talk("Wait a few seconds boss, checking your internet speed")
     st = speedtest.Speedtest()
     dl = st.download()
@@ -221,14 +221,14 @@ def InternetSpeed(self):
     print(dl,up)
     talk(f"Boss, we have {dl} megabytes per second downloading speed and {up} megabytes per second uploading speed")
 
-def comum(self,command):
+def comum(command):
     print(command)
     if ('hi'in command) or('hai'in command) or ('hey'in command) or ('hello' in command) :
         talk("Hello boss what can I help for u")
     else :
         No_result_found()
 
-def social(self,command):
+def social(command):
     print(command)
     if 'facebook' in command:
         talk('opening your facebook')
@@ -350,13 +350,13 @@ def social(self,command):
     else :
         No_result_found()
 
-def Clock_time(self,command):
+def Clock_time(command):
     print(command)
     time = datetime.datetime.now().strftime('%I:%M %p')
     print(time)
     talk("Current time is "+time)
 
-def Cal_day(self):
+def Cal_day():
     day = datetime.datetime.today().weekday() + 1
     Day_dict = {1: 'Monday', 2: 'Tuesday', 3: 'Wednesday',4: 'Thursday', 5: 'Friday', 6: 'Saturday',7: 'Sunday'}
     if day in Day_dict.keys():
@@ -365,7 +365,7 @@ def Cal_day(self):
 
     return day_of_the_week
 
-def shedule(self):
+def shedule():
     day = Cal_day().lower()
     talk("Boss today's shedule is")
     Week = {"monday" : "Boss from 9:00 to 9:50 you have Cultural class, from 10:00 to 11:50 you have mechanics class, from 12:00 to 2:00 you have brake, and today you have sensors lab from 2:00",
@@ -378,7 +378,7 @@ def shedule(self):
     if day in Week.keys():
         talk(Week[day])
 
-def college(self,command):
+def college(command):
     print(command)
     if 'teams' in command:
         talk('opening your microsoft teams')
@@ -395,7 +395,7 @@ def college(self,command):
     else :
         No_result_found()
 
-def OnlineClasses(self,command):
+def OnlineClasses(command):
     print(command)
     if("java" in command):
         talk('opening meet')
@@ -407,7 +407,7 @@ def OnlineClasses(self,command):
         talk('opening your google meet')
         webbrowser.open('https://google.meet/')
 
-def B_S(self,command):
+def B_S(command):
     print(command)
     try:
         if ('wikipedia' in command):
@@ -428,7 +428,7 @@ def B_S(self,command):
     except :
         No_result_found()
 
-def brows(self,command):
+def brows(command):
     print(command)
     if 'google' in command:
         talk("Boss, what should I search on google..")
@@ -440,7 +440,7 @@ def brows(self,command):
     else :
         No_result_found()
 
-def Google_Apps(self,command):
+def Google_Apps(command):
     print(command)
     if 'gmail' in command:
         talk('opening your google gmail')
@@ -466,7 +466,7 @@ def Google_Apps(self,command):
     else :
         No_result_found()
 
-def yt(self,command):
+def yt(command):
     print(command)
     if 'play' in command:
         talk("Boss can you please say the name of the song")
@@ -489,7 +489,7 @@ def yt(self,command):
     else :
         No_result_found()
 
-def open_source(self,command):
+def open_source(command):
     print(command)
     if 'github' in command:
         talk('opening your github')
@@ -500,7 +500,7 @@ def open_source(self,command):
     else :
         No_result_found()
 
-def edit(self,command):
+def edit(command):
     print(command)
     if 'slides' in command:
         talk('opening your google slides')
@@ -511,7 +511,7 @@ def edit(self,command):
     else :
         No_result_found()
 
-def OTT(self,command):
+def OTT(command):
     print(command)
     if 'hotstar' in command:
         talk('opening your disney plus hotstar')
@@ -540,7 +540,7 @@ def OTT(self,command):
     else :
         No_result_found()
 
-def OpenApp(self,command):
+def OpenApp(command):
     print(command)
     if ('calculator'in command) :
         talk('Opening calculator')
@@ -575,7 +575,7 @@ def OpenApp(self,command):
     else :
         No_result_found()
 
-def CloseApp(self,command):
+def CloseApp(command):
     print(command)
     if ('calculator'in command) :
         talk("okay boss, closing caliculator")
@@ -607,7 +607,7 @@ def CloseApp(self,command):
     else :
         No_result_found()
 
-def shopping(self,command):
+def shopping(command):
     print(command)
     if 'flipkart' in command:
         talk('Opening flipkart online shopping website')
@@ -663,7 +663,7 @@ def shopping(self,command):
     else :
         No_result_found()
 
-def pdf_reader(self):
+def pdf_reader():
     talk("Boss enter the name of the book which you want to read")
     n = input("Enter the book name: ")
     n = n.strip()+".pdf"
@@ -678,7 +678,7 @@ def pdf_reader(self):
     print(text)
     talk(text)
 
-def silenceTime(self,command):
+def silenceTime(command):
     print(command)
     x=0
     if ('10' in command) or ('ten' in command):x=600
@@ -712,7 +712,7 @@ def searchon(command):
         command.replace("stackoverflow","")
         webbrowser.open("https://stackoverflow.com/search?q="+command)
 
-def silence(self,k):
+def silence(k):
     t = k
     s = "Ok boss I will be silent for "+str(t/60)+" minutes"
     talk(s)
@@ -724,7 +724,7 @@ def silence(self,k):
         t -= 1
     talk("Boss "+str(k/60)+" minutes over")
 
-def verifyMail(self):
+def verifyMail():
     try:
         talk("what should I say?")
         content = take_Command()
@@ -736,7 +736,7 @@ def verifyMail(self):
         print(e)
         talk("Sorry sir I am not not able to send this email")
 
-def SendEmail(self,to,content):
+def SendEmail(to,content):
     print(content)
     server = smtplib.SMTP('smtp.gmail.com',587)
     server.ehlo()
@@ -745,7 +745,7 @@ def SendEmail(self,to,content):
     server.sendmail("YOUR_MAIL_ID",to,content)
     server.close()
 
-def locaiton(self):
+def locaiton():
     talk("Wait boss, let me check")
     try:
         IP_Address = get('https://api.ipify.org').text
@@ -768,13 +768,13 @@ def locaiton(self):
         talk("Sorry boss, due to network issue i am not able to find where we are.")
         pass
 
-def Instagram_Pro(self):
+def Instagram_Pro():
     talk("Boss please enter the user name of Instagram: ")
     name = input("Enter username here: ")
     webbrowser.open(f"www.instagram.com/{name}")
     time.sleep(5)
 
-def scshot(self):
+def scshot():
     talk("Boss, please tell me the name for this screenshot file")
     name = take_Command()
     talk("Please boss hold the screen for few seconds, I am taking screenshot")
@@ -783,7 +783,7 @@ def scshot(self):
     img.save(f"{name}.png")
     talk("I am done boss, the screenshot is saved in main folder.")
 
-def news(self):
+def news():
     MAIN_URL_= "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=YOUR_NEWS_API_KEY"
     MAIN_PAGE_ = get(MAIN_URL_).json()
     articles = MAIN_PAGE_["articles"]
@@ -796,7 +796,7 @@ def news(self):
         talk(f"todays {seq[i]} news is: {headings[i]}")
     talk("Boss I am done, I have read most of the latest news")
 
-def condition(self):
+def condition():
     usage = str(psutil.cpu_percent())
     talk("CPU is at"+usage+" percentage")
     battray = psutil.sensors_battery()
@@ -811,7 +811,7 @@ def condition(self):
     else:
         talk(f"Boss we have very low power, please connect to charging otherwise the system will shutdown very soon")
 
-def No_result_found(self):
+def No_result_found():
     talk('Boss I couldn\'t understand, could you please say it again.')
 
 running= True
