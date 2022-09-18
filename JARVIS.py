@@ -19,7 +19,7 @@ import instaloader
 import pyautogui
 import PyPDF2
 from PIL import ImageGrab
-# import pyaudio
+import streamlit
 import wave
 import numpy as np 
 from bs4 import BeautifulSoup
@@ -814,7 +814,8 @@ def condition():
 def No_result_found():
     talk('Boss I couldn\'t understand, could you please say it again.')
 
-running= True
-
-while running is True:
+if st.button('Start the assistant'):
+    running = True
     run()
+else:
+    running = False
