@@ -19,7 +19,7 @@ import instaloader
 import pyautogui
 import PyPDF2
 from PIL import ImageGrab
-import streamlit
+import streamlit as st
 import wave
 import numpy as np 
 from bs4 import BeautifulSoup
