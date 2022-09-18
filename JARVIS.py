@@ -2,40 +2,21 @@ import sys
 import speech_recognition as sr
 import pyttsx3
 import pywhatkit
-import pywhatkit as kit
 import datetime
 import wikipedia
-import pyjokes
 import webbrowser
 import time
-import subprocess
 import os
 import cv2
-import random
 from requests import get
 import smtplib
 import psutil
-import instaloader
+import streamlit as st
 import pyautogui
 import PyPDF2
-from PIL import ImageGrab
-import streamlit as st
-import wave
-import numpy as np 
 from bs4 import BeautifulSoup
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtCore import QTimer,QTime,QDate,Qt
-from PyQt5.QtGui import QMovie
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.uic import loadUiType
-
-from state import state
-from pywikihow import search_wikihow
 import speedtest
 from pytube import YouTube
-import code
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -49,10 +30,10 @@ def take_Command():
     try:
         listener = sr.Recognizer()
         with sr.Microphone() as source:
-            print('Listening....')
+            st.write('Listening....')
             listener.pause_threshold = 1
             voice = listener.listen(source,timeout=4,phrase_time_limit=7)
-            print("Recognizing...")
+            st.write("Recognizing...")
             command = listener.recognize_google(voice,language='en-in')
             command = command.lower()
             if 'jarvis' in command:
@@ -66,7 +47,7 @@ def run_jarvis():
     talk('Welcome to the assistant! How may I help you?')
     while True:
         command = take_Command()
-        print(command)
+        st.write(command)
         if ('play a song' in command) or ('youtube' in command) or ("download a song" in command) or ("download song" in command) :
             yt(command)
         elif 'time' in command :
@@ -135,7 +116,7 @@ def run_jarvis():
                     os.startfile(os.path.join(music_dir, song))
         elif 'ip address' in command:
             ip = get('https://api.ipify.org').text
-            print(f"your IP address is {ip}")
+            st.write(f"your IP address is {ip}")
             talk(f"your IP address is {ip}")
 
         elif 'send email' in command:
@@ -160,7 +141,7 @@ def run_jarvis():
 def Intro():
     while True:
         permission = take_Command()
-        print(permission)
+        st.write(permission)
         if ("wake up" in permission) or ("get up" in permission) or("hello there"in permission):
             run_jarvis()
         elif ("goodbye" in permission) or ("get lost" in permission):
@@ -176,7 +157,7 @@ def wish():
     hour = int(datetime.datetime.now().hour)
     t = time.strftime("%I:%M %p")
     day = Cal_day()
-    print(t)
+    st.write(t)
     if (hour>=0) and (hour <=12) and ('AM' in t):
         talk(f'Good morning boss, its {day} and the time is {t}')
     elif (hour >= 12) and (hour <= 16) and ('PM' in t):
@@ -218,18 +199,18 @@ def InternetSpeed():
     dl = dl/(1000000)
     up = st.upload()
     up = up/(1000000)
-    print(dl,up)
+    st.write(dl,up)
     talk(f"Boss, we have {dl} megabytes per second downloading speed and {up} megabytes per second uploading speed")
 
 def comum(command):
-    print(command)
+    st.write(command)
     if ('hi'in command) or('hai'in command) or ('hey'in command) or ('hello' in command) :
         talk("Hello boss what can I help for u")
     else :
         No_result_found()
 
 def social(command):
-    print(command)
+    st.write(command)
     if 'facebook' in command:
         talk('opening your facebook')
         webbrowser.open('https://www.facebook.com/')
@@ -351,9 +332,9 @@ def social(command):
         No_result_found()
 
 def Clock_time(command):
-    print(command)
+    st.write(command)
     time = datetime.datetime.now().strftime('%I:%M %p')
-    print(time)
+    st.write(time)
     talk("Current time is "+time)
 
 def Cal_day():
@@ -361,7 +342,7 @@ def Cal_day():
     Day_dict = {1: 'Monday', 2: 'Tuesday', 3: 'Wednesday',4: 'Thursday', 5: 'Friday', 6: 'Saturday',7: 'Sunday'}
     if day in Day_dict.keys():
         day_of_the_week = Day_dict[day]
-        print(day_of_the_week)
+        st.write(day_of_the_week)
 
     return day_of_the_week
 
@@ -379,7 +360,7 @@ def shedule():
         talk(Week[day])
 
 def college(command):
-    print(command)
+    st.write(command)
     if 'teams' in command:
         talk('opening your microsoft teams')
         webbrowser.open('https://teams.microsoft.com/')
@@ -396,7 +377,7 @@ def college(command):
         No_result_found()
 
 def OnlineClasses(command):
-    print(command)
+    st.write(command)
     if("java" in command):
         talk('opening meet')
         webbrowser.open("https://google.meet/java")
@@ -408,7 +389,7 @@ def OnlineClasses(command):
         webbrowser.open('https://google.meet/')
 
 def B_S(command):
-    print(command)
+    st.write(command)
     try:
         if ('wikipedia' in command):
             target1 = command.replace('for','')
@@ -421,15 +402,15 @@ def B_S(command):
             target1 = command.replace("tell me about"," ")
         elif('who the heck is' in command):
             target1 = command.replace("who the heck is"," ")
-        print("searching....")
+        st.write("searching....")
         info = wikipedia.summary(target1,5)
-        print(info)
+        st.write(info)
         talk("according to wikipedia "+info)
     except :
         No_result_found()
 
 def brows(command):
-    print(command)
+    st.write(command)
     if 'google' in command:
         talk("Boss, what should I search on google..")
         S = take_Command()
@@ -441,7 +422,7 @@ def brows(command):
         No_result_found()
 
 def Google_Apps(command):
-    print(command)
+    st.write(command)
     if 'gmail' in command:
         talk('opening your google gmail')
         webbrowser.open('https://mail.google.com/mail/')
@@ -467,16 +448,16 @@ def Google_Apps(command):
         No_result_found()
 
 def yt(command):
-    print(command)
+    st.write(command)
     if 'play' in command:
         talk("Boss can you please say the name of the song")
         song = take_Command()
         if "play" in song:
             song = song.replace("play","")
         talk('playing '+song)
-        print(f'playing {song}')
+        st.write(f'playing {song}')
         pywhatkit.playonyt(song)
-        print('playing')
+        st.write('playing')
     elif "download" in command:
         talk("Boss please enter the youtube video link which you want to download")
         link = input("Enter the youtube video link: ")
@@ -490,7 +471,7 @@ def yt(command):
         No_result_found()
 
 def open_source(command):
-    print(command)
+    st.write(command)
     if 'github' in command:
         talk('opening your github')
         webbrowser.open('https://github.com/BolisettySujith')
@@ -501,7 +482,7 @@ def open_source(command):
         No_result_found()
 
 def edit(command):
-    print(command)
+    st.write(command)
     if 'slides' in command:
         talk('opening your google slides')
         webbrowser.open('https://docs.google.com/presentation/')
@@ -512,7 +493,7 @@ def edit(command):
         No_result_found()
 
 def OTT(command):
-    print(command)
+    st.write(command)
     if 'hotstar' in command:
         talk('opening your disney plus hotstar')
         webbrowser.open('https://www.hotstar.com/in')
@@ -541,7 +522,7 @@ def OTT(command):
         No_result_found()
 
 def OpenApp(command):
-    print(command)
+    st.write(command)
     if ('calculator'in command) :
         talk('Opening calculator')
         os.startfile('C:\\Windows\\System32\\calc.exe')
@@ -576,7 +557,7 @@ def OpenApp(command):
         No_result_found()
 
 def CloseApp(command):
-    print(command)
+    st.write(command)
     if ('calculator'in command) :
         talk("okay boss, closing caliculator")
         os.system("taskkill /f /im calc.exe")
@@ -608,7 +589,7 @@ def CloseApp(command):
         No_result_found()
 
 def shopping(command):
-    print(command)
+    st.write(command)
     if 'flipkart' in command:
         talk('Opening flipkart online shopping website')
         webbrowser.open("https://www.flipkart.com/")
@@ -675,11 +656,11 @@ def pdf_reader():
     num = int(input("Enter the page number: "))
     page = pdfReader.getPage(num)
     text = page.extractText()
-    print(text)
+    st.write(text)
     talk(text)
 
 def silenceTime(command):
-    print(command)
+    st.write(command)
     x=0
     if ('10' in command) or ('ten' in command):x=600
     elif '1' in command or ('one' in command):x=60
@@ -719,7 +700,7 @@ def silence(k):
     while t:
         mins, secs = divmod(t, 60)
         timer = '{:02d}:{:02d}'.format(mins, secs)
-        print(timer, end="\r")
+        st.write(timer, end="\r")
         time.sleep(1)
         t -= 1
     talk("Boss "+str(k/60)+" minutes over")
@@ -733,11 +714,11 @@ def verifyMail():
         SendEmail(to,content)
         talk("Email has been sent to "+str(to))
     except Exception as e:
-        print(e)
+        st.write(e)
         talk("Sorry sir I am not not able to send this email")
 
 def SendEmail(to,content):
-    print(content)
+    st.write(content)
     server = smtplib.SMTP('smtp.gmail.com',587)
     server.ehlo()
     server.starttls()
@@ -749,9 +730,9 @@ def locaiton():
     talk("Wait boss, let me check")
     try:
         IP_Address = get('https://api.ipify.org').text
-        print(IP_Address)
+        st.write(IP_Address)
         url = 'https://get.geojs.io/v1/ip/geo/'+IP_Address+'.json'
-        print(url)
+        st.write(url)
         geo_reqeust = get(url)
         geo_data = geo_reqeust.json()
         city = geo_data['city']
@@ -761,7 +742,7 @@ def locaiton():
         longitude = geo_data['longitude']
         latidute = geo_data['latitude']
         org = geo_data['organization_name']
-        print(city+" "+state+" "+country+" "+tZ+" "+longitude+" "+latidute+" "+org)
+        st.write(city+" "+state+" "+country+" "+tZ+" "+longitude+" "+latidute+" "+org)
         talk(f"Boss i am not sure, but i think we are in {city} city of {state} state of {country} country")
         talk(f"and boss, we are in {tZ} timezone the latitude os our location is {latidute}, and the longitude of our location is {longitude}, and we are using {org}\'s network ")
     except Exception as e:
@@ -792,7 +773,7 @@ def news():
     for ar in articles:
         headings.append(ar['title'])
     for i in range(len(seq)):
-        print(f"todays {seq[i]} news is: {headings[i]}")
+        st.write(f"todays {seq[i]} news is: {headings[i]}")
         talk(f"todays {seq[i]} news is: {headings[i]}")
     talk("Boss I am done, I have read most of the latest news")
 
@@ -814,8 +795,11 @@ def condition():
 def No_result_found():
     talk('Boss I couldn\'t understand, could you please say it again.')
 
-if st.button('Start the assistant'):
-    running = True
+running= True
+
+while running is True:
     run()
+if st.button('Say hello'):
+    st.write('Why hello there')
 else:
-    running = False
+    st.write('Goodbye')
