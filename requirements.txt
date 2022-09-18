@@ -18,3 +18,4 @@ state~=0.1.1.dev0
 pywikihow~=0.5.7
 pytube~=12.1.0
 qrcode~=7.3.1
+streamlit~=1.12.0
